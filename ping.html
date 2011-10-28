@@ -1,0 +1,45 @@
+<script src="js/jquery-1.6.4.min.js"></script> <!-- Including jQuery -->
+
+<script type="text/javascript">
+var req;
+var ui = 15;
+var latest = 0;
+var unreaded = 0;
+var feedUrl = 'http://www.gamelib.com.br/app/latest/?limit=1';
+
+function checkUpdates() {
+    req = new XMLHttpRequest();
+    req.onload = handleResponse;
+    req.onerror = handleError;
+    req.open("GET", feedUrl, true);
+    req.send(null);
+    ui = localStorage["update_interval"];
+}
+
+function handleResponse() {
+    data = $.parseJSON(req.response);
+    current = data.results[0].content_id;
+
+    if(latest == 0) {
+        latest = current;
+    }
+
+    if(current > latest) {
+        unreaded++;
+        latest = current;
+    }
+
+    if(unreaded) {
+        chrome.browserAction.setBadgeText({text: unreaded+""});
+    }
+}
+
+function handleError() {}
+    
+window.onload = function() {
+    minutes = 60000
+    checkUpdates();
+    window.setInterval(checkUpdates, ui * minutes);
+}
+</script>
+

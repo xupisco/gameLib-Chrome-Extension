@@ -1,0 +1,132 @@
+body {
+    min-width: 250px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+
+#logo {
+    text-align: center;
+}
+
+#logo:hover {
+    cursor: pointer;
+}
+
+#loader {
+    margin: 15px 0;
+    text-align: center;
+}
+
+#rounded {
+    -webkit-border-radius: 6px;
+    background-color: #eee;
+    padding: 5px;
+}
+
+.post_holder {
+    background-color: #444;
+    padding: 5px;
+    font-size: 11px;
+    color: #333;
+    margin-bottom: 1px;
+}
+
+.post_holder:hover {
+    background-color: #333;
+    cursor: pointer;
+}
+
+.post_holder:first-child {
+    margin-top: 5px;
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+}
+
+.post_comments {
+    -webkit-border-radius: 2px;
+    float: right;
+    background-color: #bf0000;
+    color: #fff;
+    padding: 2px 4px;
+    margin-left: 5px;
+}
+
+.post_date {
+    color: #777;
+    font-size: 11px;
+}
+
+.post_title {
+    color: #f1f1f1;
+    font-size: 12px;
+}
+
+.post_content {
+    background-color: #fdfdfd;
+    color: #333;
+    font-size: 11px;
+    padding: 6px;
+    display: none;
+    -webkit-box-shadow: 0px 4px 5px 0px #ccc;
+    margin-bottom: 9px;
+}
+
+.post_content p {
+    margin-top: 0;
+}
+
+.post_more a {
+    color: #069;
+    text-decoration: none;
+}
+
+.post_more a:hover {
+    background-color: #00579B;
+    text-decoration: none;
+    color: #fff;
+}
+
+.post_content img, .post_content object, .post_content embed {
+    max-width: 230px;
+    width: auto;
+    height: auto;
+}
+
+#pages {
+    font-size: 11px;
+    display: none;
+}
+
+#previous, #next {
+    padding: 2px 4px;
+    background-color: #aaa;
+    color: #333;
+    width: 111px;
+    height: 30px;
+    text-align: center;
+    color: #f1f1f1;
+}
+
+.off {
+    opacity: 0.5;
+}
+
+#previous.off:hover {
+    cursor: default;
+}
+
+#previous.on:hover, #next.on:hover {
+    background-color: #888;
+    cursor: pointer;
+}
+
+#next {
+    float: right;
+    -webkit-border-bottom-right-radius: 4px;
+    width: 112px;
+}
+
+#previous {
+    -webkit-border-bottom-left-radius: 4px;
+}

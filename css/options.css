@@ -1,0 +1,40 @@
+body {
+    background-image: url('../images/apple_bg.jpg');
+    background-position: fixed;
+    font-size: 12px;
+    font-family: Arial;
+}
+
+#options_holder {
+    width: 300px;
+    margin: 0 auto;
+    background-color: #fff;
+    -webkit-border-radius: 10px;
+    padding: 10px;
+    color: #333;
+    -webkit-box-shadow: 0px 0px 15px 3px #111;
+}
+
+#options_logo {
+    width: 250px;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#ui_holder {
+
+}
+
+#ui_holder select {
+    width: 102px;
+    background-color: #f1f1f1;
+    border: 1px solid #888;
+}
+
+#msgs {
+    font-size: 11px;
+    color: #226be2;
+    margin-top: 5px;
+    display: none;
+}

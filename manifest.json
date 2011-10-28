@@ -1,0 +1,18 @@
+{
+    "name": "gameLib",
+    "version": "0.7.1",
+    "description": "Tenha sempre a mão acesso aos últimos posts do portal! Simples e fácil.",
+    "permissions": ["management"],
+    "browser_action": {
+        "default_icon": "icons/favicon.png",
+        "popup": "core.html"
+    },
+    "background_page": "ping.html",
+    "options_page": "options.html",
+    "permissions": [
+        "http://*.gamelib.com.br/*",
+        "tabs"
+    ],
+    "icons": { "48": "icons/icon48.png",
+               "128": "icons/icon128.png" }
+}

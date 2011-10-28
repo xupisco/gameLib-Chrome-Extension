@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>gameLib</title>
+
+<link rel="stylesheet" type="text/css" href="css/options.css" />
+<script src="js/jquery-1.6.4.min.js"></script> <!-- Including jQuery -->
+<script src="js/core.js"></script> <!-- Our script file -->
+</head>
+
+<script type="text/javascript">
+function save_options() {
+    var select = $("#update_interval option:selected").val();
+    localStorage["update_interval"] = select;
+
+    // Update status to let user know options were saved.
+    $("#msgs").slideDown();
+    setTimeout(function() {
+        $("#msgs").slideUp();
+    }, 2000);
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+    var ui = localStorage["update_interval"];
+    if (!ui) {
+        ui = 15;
+    }
+    var select = document.getElementById("update_interval");
+    
+    for (var i = 0; i < select.children.length; i++) {
+        var child = select.children[i];
+        if (child.value == ui) {
+            child.selected = "true";
+            break;
+        }
+    }
+}
+</script>
+
+<body onload="restore_options()">
+
+<div id="options_logo">
+    <img src="images/logo_options.png" border="0" />
+</div>
+<div id="options_holder">
+
+<div id= "ui_holder">
+Checar novidades a cada 
+<select id="update_interval">
+    <option value="5">5 minutos</option>
+    <option value="10">10 minutos</option>
+    <option value="15">15 minutos</option>
+    <option value="30">30 minutos</option>
+    <option value="60">1 hora</option>
+</select>
+<button onclick="save_options()">Salvar</button>
+
+<div id="msgs">Pronto...</div>
+</div>
+
+</div>
+
+</body>
+</html>

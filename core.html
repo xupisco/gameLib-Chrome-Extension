@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script src="js/jquery-1.6.4.min.js"></script> <!-- Including jQuery -->
+<script src="js/core.js"></script> <!-- Our script file -->
+
+<script type="text/javascript">
+var req;
+var firstRun = true;
+var page = 0;
+var limit = 5;
+var opened = 0;
+var feedUrl = 'http://www.gamelib.com.br/app/latest/?limit=' + limit;
+
+function main() {
+    req = new XMLHttpRequest();
+    req.onload = handleResponse;
+    req.onerror = handleError;
+    req.open("GET", feedUrl, true);
+    req.send(null);
+
+    bg = chrome.extension.getBackgroundPage()
+    bg.unreaded = 0;
+    chrome.browserAction.setBadgeText({text:''});
+
+    $("#logo").click(function() {
+            chrome.tabs.create({'url': 'http://www.gamelib.com.br'});
+            self.close();
+            });
+
+    $("#next").addClass('on');
+    $("#previous").addClass('on');
+
+    $("#next").click(function() { gotoPage(1) });
+    $("#previous").click(function() { gotoPage(0) });
+}
+
+function gotoPage(n) {
+    page = n ? page + 1 : page - 1;
+    if(page != -1) {
+        $("#content").css('opacity', '0.1');
+        $("#loader").css({ 'position': 'absolute', 'top': '170px', 'left': '60px' });
+        $("#loader").show();
+        offset = limit * page;
+        feedUrl = 'http://www.gamelib.com.br/app/latest/?limit=' + limit + '&offset=' + offset;
+        req.open("GET", feedUrl, true);
+        req.send(null);
+    } else {
+        page = 0;
+    }
+}
+
+function openPost(pid) {
+    chrome.tabs.create({'url': 'http://www.gamelib.com.br' + $("#" + pid).attr('link')});
+    self.close();
+}
+
+function handleResponse() {
+    $("#content").html('');
+    data = $.parseJSON(req.response);
+    for (var i = 0; i < data.results.length; i++) {
+        var post = data.results[i];
+        div = "<div class='post_holder' id='" + post.content_id + "' link='" + post.content_link + "' post_id='" + post.content_id + "'>";
+        div += "<div class='post_comments'>" + post.content_comments + "</div>\n";
+        div += "<div class='post_date'>" + post.content_date + "</div>\n";
+        div += "<div class='post_title'>" + post.content_title + "</div>\n";
+        div += "</div>\n";
+        div += "<div id='post_content_" + post.content_id  + "' class='post_content'>" + post.content_teaser + "<div class='post_more'><a href='javascript:openPost(" + post.content_id + ")'>Abrir post completo...</a></div></div>\n";
+        $("#content").append(div);
+    }
+
+    if(page <= 0) {
+        $("#previous").removeClass('on').addClass('off');
+    } else {
+        $("#previous").removeClass('off').addClass('on');
+    }
+
+    $("#loader").hide();
+    $("#content").css('opacity', '1');
+
+    $(".post_holder").click(function() {
+        post_content = "#post_content_" + $(this).attr('post_id');
+        if(opened != $(this).attr('post_id')) {
+            $('.post_content').each(function() { $(this).slideUp(); });
+            $(post_content).slideToggle();
+            opened = $(this).attr('post_id');
+        } else {
+        //openPost($(this).attr('post_id'));
+            opened = 0;
+            $(post_content).slideUp();
+        }
+    });
+
+    if(firstRun) {
+        $("#pages").slideDown();
+    }
+
+    firstRun = false;
+}
+
+function handleError() {}
+</script>
+
+</head>
+
+<body onload="main()">
+
+    <div id="rounded">
+        <div id="logo"><img src="http://www.gamelib.com.br/static/images/gamelib_logo-alert.gif" border="0" /></div>
+        <div id="loader"><img src="images/loading.gif" border="0" /></div>
+        <div id="content"></div>
+        <div id="pages">
+            <div id="next"><img src="images/arrow_next.png" border="0" /></div>
+            <div id="previous"><img src="images/arrow_previous.png" border="0" /></div>
+        </div>
+    </div>
+
+</body>
+</html>
